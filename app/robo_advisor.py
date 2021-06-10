@@ -1,0 +1,1 @@
+print("TO DO: make a web request or some stock market data.")
