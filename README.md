@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 After activating the environment and installing the required packages, create a ".env" file to specify environment variable values to be used by the program. To do so, navigate to the root directory of the local repository and create a new file called ".env".
 
-### Obtain Aplha Vantage API Key
+### Obtain Alpha Vantage API Key
 
 This program utilizes the Alpha Vantage API to obtain stock information. To use the program, you must obtain an API key and save it in the newly created .env file. To do so, navigate to Alpha Vantage's website: https://www.alphavantage.co/support/#api-key
 
