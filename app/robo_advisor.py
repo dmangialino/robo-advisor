@@ -4,6 +4,7 @@ import requests  # used to make API requests
 import sys  # used for sys.exit() function
 import json  # to create list
 from datetime import datetime  # to capture date and time of program execution
+from pandas import DataFrame  # to use DataFrames
 
 load_dotenv() 
 
@@ -46,7 +47,20 @@ if "Error Message" in response.text:
 # Convert response from API to a dictionary
 parsed_response = json.loads(response.text)
 
+# Convert dictionary to DataFrame
+response_df = DataFrame(parsed_response)
 
+# Create formatted DataFrame to write to CSV
+
+# Write historical data to local CSV file
+csv_file_path = "data/prices.csv"
+response_df.to_csv(csv_file_path)
+
+# Calculate latest closing price
+
+# Caluculate recent high price
+
+# Calculate recent low price
 
 # Print stock information and recommendation for user
 print("----------------------------------------")
@@ -55,7 +69,7 @@ print("REQUESTED AT: ", timestampStr)
 print("----------------------------------------")
 print("STOCK SYMBOL: ", symbol_formatted)
 print("----------------------------------------")
-print("LAST REFRESH:", parsed_response["Meta Data"]["3. Last Refreshed"])
+print("LAST REFRESH:", response_df["Meta Data"]["3. Last Refreshed"])
 print("LATEST CLOSING PRICE: ")
 print("RECENT HIGH PRICE: ")
 print("RECENT LOW PRICE: ")
