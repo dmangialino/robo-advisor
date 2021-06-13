@@ -2,6 +2,8 @@ import os  # used to obtain environment variables from .env file
 from dotenv import load_dotenv  # used to obtain environment variables from .env file
 import requests  # used to make API requests
 import sys  # used for sys.exit() function
+import json  # to create list
+from datetime import datetime  # to capture date and time of program execution
 
 load_dotenv() 
 
@@ -21,6 +23,14 @@ while(True):
     else:
         break
 
+# Capture date and time of the request / program execution
+# Code for date and time adopted form thispointer.com and Stack Overflow for AM/PM (links below)
+# https://thispointer.com/python-how-to-get-current-date-and-time-or-timestamp/
+# https://stackoverflow.com/questions/1759455/how-can-i-account-for-period-am-pm-using-strftime
+timestamp = datetime.now()
+timestampStr = timestamp.strftime("%b-%d-%Y %I:%M %p")
+
+
 # Format user input to uppercase for use with API
 # Upper function found on W3Schools (https://www.w3schools.com/python/ref_string_upper.asp)
 symbol_formatted = symbol.upper()
@@ -33,5 +43,25 @@ if "Error Message" in response.text:
     print("We're sorry, there was an error fetching data from the API. Please re-run the program to try again.")
     sys.exit()
 
-print(type(response))
-print(response.text)
+# Convert response from API to a dictionary
+parsed_response = json.loads(response.text)
+
+
+
+# Print stock information and recommendation for user
+print("----------------------------------------")
+print("REQUESTED STOCK MARKET DATA...")
+print("REQUESTED AT: ", timestampStr)
+print("----------------------------------------")
+print("STOCK SYMBOL: ", symbol_formatted)
+print("----------------------------------------")
+print("LAST REFRESH:", parsed_response["Meta Data"]["3. Last Refreshed"])
+print("LATEST CLOSING PRICE: ")
+print("RECENT HIGH PRICE: ")
+print("RECENT LOW PRICE: ")
+print("----------------------------------------")
+print("RECOMMENDATION: ")
+print("CONFIDENCE: ")
+print("RECOMMENDATION EXPLANATION: ")
+print("----------------------------------------")
+
