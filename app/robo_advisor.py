@@ -15,6 +15,12 @@ symbol = ""
 def to_usd(my_price):
     return f"${my_price:,.2f}"
 
+def recommendation(close, low):
+    if(close < (1.2 * low)):
+        return "Buy"
+    else:
+        return "Don't Buy"
+
 while(True):
     symbol = input("Please provide a stock or cryptocurrency symbol: ")
     contains_digit = False
@@ -88,6 +94,10 @@ for date in dates:
 high_price = to_usd(float(max(high_prices)))
 low_price = to_usd(float(min(low_prices)))
 
+########## CALL RECOMMENDATION FUCNTION TO OBTAIN RECOMMENDATION FOR THE STOCK / CRYPTOCURRENCY ##########
+rec = recommendation(float(timeseries[latest_date]["4. close"]), float(min(low_prices)))
+
+
 # Print stock information and recommendation for user
 print("----------------------------------------")
 print("REQUESTED STOCK MARKET DATA...")
@@ -100,7 +110,6 @@ print("LATEST CLOSING PRICE:", latest_close)
 print("RECENT HIGH PRICE:", high_price)
 print("RECENT LOW PRICE:", low_price)
 print("----------------------------------------")
-print("RECOMMENDATION:")
-print("CONFIDENCE:")
-print("RECOMMENDATION EXPLANATION:")
+print("RECOMMENDATION:", rec)
+print("RECOMMENDATION EXPLANATION: The stock's closing price is less than 20% of its recent close.")
 print("----------------------------------------")
