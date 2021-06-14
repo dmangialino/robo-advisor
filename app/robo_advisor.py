@@ -111,5 +111,10 @@ print("RECENT HIGH PRICE:", high_price)
 print("RECENT LOW PRICE:", low_price)
 print("----------------------------------------")
 print("RECOMMENDATION:", rec)
-print("RECOMMENDATION EXPLANATION: The stock's closing price is less than 20% of its recent close.")
+if(rec == "Buy"):
+    print("RECOMMENDATION EXPLANATION: The stock's closing price is less than 20% of its recent close.")
+elif(rec == "Don't Buy"):
+    print("RECOMMENDATION EXPLANATION:  The stock's closing price is not less than 20% of its recent close.")
+else:
+    print("We're sorry, there was an issue generating your recommendation. Please try again.")
 print("----------------------------------------")
