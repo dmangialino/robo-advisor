@@ -4,7 +4,9 @@ import requests  # used to make API requests
 import sys  # used for sys.exit() function
 import json  # to create list
 from datetime import datetime  # to capture date and time of program execution
+import pandas  # to use DataFrames
 from pandas import DataFrame  # to use DataFrames
+
 
 load_dotenv() 
 
@@ -21,8 +23,10 @@ def recommendation(close, low):
     else:
         return "Don't Buy"
 
+
+
 while(True):
-    symbol = input("Please provide a stock or cryptocurrency symbol: ")
+    symbol = input("Please provide a stock symbol: ")
     contains_digit = False
     for character in symbol:
         if character.isdigit():
@@ -63,23 +67,38 @@ parsed_response = json.loads(response.text)
 # Convert dictionary to DataFrame
 response_df = DataFrame(parsed_response)
 
-# Create formatted DataFrame to write to CSV
+# Create list of dates
+timeseries = parsed_response["Time Series (Daily)"]
+dates = list(timeseries.keys())
+dates.sort(reverse = True)
 
 # Write historical data to local CSV file
-### TO DO: FIX FORMATTING?????
 csv_file_path = "data/prices.csv"
-response_df.to_csv(csv_file_path)
+historical_data = []
+
+
+for date in dates:
+    temp_list = []
+    temp_list.append(date)
+    temp_list.append(timeseries[date]["1. open"])
+    temp_list.append(timeseries[date]["2. high"])
+    temp_list.append(timeseries[date]["3. low"])
+    temp_list.append(timeseries[date]["4. close"])
+    temp_list.append(timeseries[date]["6. volume"])
+    
+    historical_data.append(temp_list)
+
+print("HISTORICAL DATA:", historical_data)
+    
+formatted_response_df = pandas.DataFrame(historical_data, columns=["timestamp", "open", "high", "low", "close", "volume"])
+
+formatted_response_df.to_csv(csv_file_path)
 
 
 ########## CALCULATE REQUIRED FIELDS ##########
 
-# Create list of dates
-timeseries = parsed_response["Time Series (Daily)"]
-
 # Calculate latest closing price (clos price on latest available day of data)
 # Utilized W3Schools documentation for sort function / reverse parameter (https://www.w3schools.com/python/ref_list_sort.asp)
-dates = list(timeseries.keys())
-dates.sort(reverse = True)
 latest_date = dates[0]
 latest_close = to_usd(float(timeseries[latest_date]["4. close"]))
 
