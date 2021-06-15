@@ -85,13 +85,9 @@ for date in dates:
     temp_list.append(timeseries[date]["3. low"])
     temp_list.append(timeseries[date]["4. close"])
     temp_list.append(timeseries[date]["6. volume"])
-    
     historical_data.append(temp_list)
 
-print("HISTORICAL DATA:", historical_data)
-    
 formatted_response_df = pandas.DataFrame(historical_data, columns=["timestamp", "open", "high", "low", "close", "volume"])
-
 formatted_response_df.to_csv(csv_file_path)
 
 
