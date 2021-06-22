@@ -31,7 +31,9 @@ Then, complete the form and CAPTCHA and click "GET FREE API KEY."
 
 Copy the API key provided and assign it to the `ALPHAVANTAGE_API_KEY` in the .env file. Be sure to put double quotes around the API key, as shown below:
 
-`ALPHAVANTAGE_API_KEY` = "API_KEY_HERE"
+```sh
+ALPHAVANTAGE_API_KEY = "API_KEY_HERE"
+```
 
 ## Run the App
 
